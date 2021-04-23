@@ -29,4 +29,8 @@ def write_memory():
     logging.warning(f"DEBUG write {address}={value}")
     return ""
 
+@app.route("/status", methods=["GET"])
+def healthcheck():
+    return "Healthy"
+
 app.run(host="0.0.0.0", port=8080)
