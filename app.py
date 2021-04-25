@@ -11,6 +11,7 @@ WRITE_MEMORY_API=os.getenv("WRITE_MEMORY_API")
 @app.route("/api/v1/execute", methods=["POST"])
 def execute():
     cpu = request.json
+    id = cpu["id"]
     cpu["state"]["cycles"] += 7
 
     value = cpu["state"]["a"]
@@ -19,7 +20,7 @@ def execute():
     elif cpu["opcode"] == 0x12: # STAX D
         address = (cpu["state"]["d"] << 8) | cpu["state"]["e"]
 
-    requests.post(f"{WRITE_MEMORY_API}?address={address}&value={value}")
+    requests.post(f"{WRITE_MEMORY_API}?id={id}&address={address}&value={value}")
     return json.dumps(cpu)
 
 @app.route("/api/v1/debug/write_memory", methods=["POST"])
